@@ -1,3 +1,5 @@
+import logging
+
 import casbin
 
 
@@ -41,9 +43,17 @@ def enforce(user, resource, permission):
             e = some(where (p.eft == allow))
 
             [matchers]
-            m = r.user.id == r.resource.owner
+            m = (r.user.id == r.resource.owner) || \
+            (p.user in prefixing('r_', r.user.roles) && keyMatch(r.resource.id, p.resource) && regexMatch(r.permission, p.permission))
             '''
     model = casbin.model.Model()
     model.load_model_from_text(text)
     enforcer = casbin.Enforcer(model)
+    print(logging.getLogger('casbin.core_enforcer').setLevel(logging.INFO))
+
+    def prefixing(prefix, items):
+        return [prefix + item for item in items]
+
+    enforcer.add_function('prefixing', prefixing)
+    enforcer.add_policy('r_admin', '*', '.*')
     return enforcer.enforce(user, resource, permission)

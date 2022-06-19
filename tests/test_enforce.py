@@ -1,4 +1,4 @@
-from src.enforce import enforce, User, Account, Job, Permission
+from src.enforce import enforce, User, Account, Job, Permission, Role
 
 
 def test_owner_can_get_and_run_own_account_and_job():
@@ -6,6 +6,16 @@ def test_owner_can_get_and_run_own_account_and_job():
     user = User(owner, roles=[])
     account = Account('foo', owner)
     job = Job('foo', owner)
+    assert enforce(user, account, Permission.get)
+    assert enforce(user, account, Permission.run)
+    assert enforce(user, job, Permission.get)
+    assert enforce(user, job, Permission.run)
+
+
+def test_admin_can_get_and_run_all_account_and_job():
+    user = User('alice', roles=[Role.admin])
+    account = Account('foo', 'bob')
+    job = Job('foo', 'bob')
     assert enforce(user, account, Permission.get)
     assert enforce(user, account, Permission.run)
     assert enforce(user, job, Permission.get)
