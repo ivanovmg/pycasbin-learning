@@ -57,4 +57,5 @@ def enforce(user, resource, permission):
     enforcer.add_function('prefixing', prefixing)
     enforcer.add_policy('r_admin', '*', '.*')
     enforcer.add_policy('r_management', 'account/*', 'get')
+    enforcer.add_policy('r_management', 'job/*', 'run')
     return enforcer.enforce(user, resource, permission)

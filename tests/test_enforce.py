@@ -26,3 +26,9 @@ def test_management_can_get_all_account():
     user = User('alice', roles=[Role.management])
     account = Account('foo', 'bob')
     assert enforce(user, account, Permission.get)
+
+
+def test_management_can_run_all_job():
+    user = User('alice', roles=[Role.management])
+    job = Job('foo', 'bob')
+    assert enforce(user, job, Permission.run)
