@@ -20,3 +20,9 @@ def test_admin_can_get_and_run_all_account_and_job():
     assert enforce(user, account, Permission.run)
     assert enforce(user, job, Permission.get)
     assert enforce(user, job, Permission.run)
+
+
+def test_management_can_get_all_account():
+    user = User('alice', roles=[Role.management])
+    account = Account('foo', 'bob')
+    assert enforce(user, account, Permission.get)

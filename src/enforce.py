@@ -28,7 +28,7 @@ class User:
 
 class Role:
     admin = 'admin'
-    management = 'management '
+    management = 'management'
 
 
 def enforce(user, resource, permission):
@@ -56,4 +56,5 @@ def enforce(user, resource, permission):
 
     enforcer.add_function('prefixing', prefixing)
     enforcer.add_policy('r_admin', '*', '.*')
+    enforcer.add_policy('r_management', 'account/*', 'get')
     return enforcer.enforce(user, resource, permission)
