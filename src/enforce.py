@@ -1,5 +1,3 @@
-import logging
-
 import casbin
 
 
@@ -49,7 +47,6 @@ def enforce(user, resource, permission):
     model = casbin.model.Model()
     model.load_model_from_text(text)
     enforcer = casbin.Enforcer(model)
-    print(logging.getLogger('casbin.core_enforcer').setLevel(logging.INFO))
 
     def prefixing(prefix, items):
         return [prefix + item for item in items]
