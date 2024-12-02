@@ -1,4 +1,11 @@
-from src.enforce import enforce, User, Account, Job, Permission, Role
+from pycasbin_learning.enforce import (
+    Account,
+    Job,
+    Permission,
+    Role,
+    User,
+    enforce,
+)
 
 
 def test_owner_can_get_and_run_own_account_and_job():
