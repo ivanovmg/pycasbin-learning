@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='pycasbin-learning',
-    version='',
+    version='0.0.1',
     packages=[''],
     url='',
     license='',
