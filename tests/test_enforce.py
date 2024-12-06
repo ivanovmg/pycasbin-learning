@@ -1,3 +1,5 @@
+import pytest
+
 from pycasbin_learning.enforce import (
     Account,
     Job,
@@ -17,6 +19,22 @@ def test_owner_can_get_and_run_own_account_and_job():
     assert enforce(user, account, Permission.run)
     assert enforce(user, job, Permission.get)
     assert enforce(user, job, Permission.run)
+
+
+@pytest.mark.parametrize(
+    'resource',
+    [Account('foo', 'bob'), Job('foo', 'bob')],
+)
+@pytest.mark.parametrize(
+    'permission',
+    [Permission.get, Permission.run],
+)
+def test_regular_user_cannot_perform_action_on_other_users_resources(
+    resource,
+    permission,
+):
+    user = User('alice', roles=[])
+    assert not enforce(user, resource, permission)
 
 
 def test_admin_can_get_and_run_all_account_and_job():
